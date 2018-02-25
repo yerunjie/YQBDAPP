@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_toolbar_height"
+            android:background="@color/dark_grey"
+            app:navigationIcon="@drawable/ic_back"
+            android:paddingRight="@dimen/top_toolbar_padding_horizontal"
+            android:id="@+id/tb_title_bar">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:text="我的收藏"
+                android:textSize="@dimen/top_toolbar_title_size"/>
+        <TextView
+                android:id="@+id/my_collect_editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_gravity="right"
+                android:text="编辑"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/top_toolbar_title_size_sm"/>
+
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view_my_collect"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <LinearLayout
+            android:id="@+id/my_collect_bottom_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#e6e6e6"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#e5e5e5"/>
+
+        <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/dark_grey">
+
+            <TextView
+                    android:id="@+id/my_collect_select_all"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:text="全选"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"/>
+            <View
+                    android:background="#888888"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+            <TextView
+                    android:id="@+id/my_collect_delete"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:text="删除"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"/>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.yqbd.yqbdapp.R;
 import com.yqbd.yqbdapp.base.YQBDBaseActivity;
 import com.yqbd.yqbdapp.base.YQBDBaseCallBack;
 import com.yqbd.yqbdapp.base.YQBDBaseResponse;
+import com.yqbd.yqbdapp.main.fragments.UserCenterFragment;
 import com.yqbd.yqbdapp.bean.UserInfoBean;
 import com.yqbd.yqbdapp.main.api.MainApi;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,12 +28,18 @@ import java.util.ArrayList;
 public class MainActivity extends YQBDBaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     private ArrayList<Fragment> fragments;
     private CircleImageView civ_title_bar_head_portrait, civ_nav_head_portrait;
-    private TextView tv_title, tv_nick_name, tv_telephone;
+    private TextView tv_title, tv_nick_name;
     private Toolbar tb_title_bar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
     private UserInfoBean userInfoBean;
+
+    private static final int FRAGMENT_POSITION_INDEX = 2;
+    private static final int FRAGMENT_POSITION_TASK = 1;
+    private static final int FRAGMENT_POSITION_MYTASK = 0;
+
+    private static final int FRAGMENT_SIZE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +60,32 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
     }
 
     private void initView() {
-        civ_title_bar_head_portrait = (CircleImageView) findViewById(R.id.civ_title_bar_head_portrait);
         tv_title = (TextView) findViewById(R.id.tv_title);
         tb_title_bar = (Toolbar) findViewById(R.id.tb_title_bar);
+//       civ_title_bar_head_portrait = (CircleImageView) tb_title_bar.findViewById(R.id.title_bar_head_portrait);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 civ_nav_head_portrait = (CircleImageView) navigationView.findViewById(R.id.civ_nav_head_portrait);
                 tv_nick_name = (TextView) navigationView.findViewById(R.id.tv_nick_name);
-                tv_telephone = (TextView) navigationView.findViewById(R.id.tv_telephone);
                 if (userInfoBean != null) {
                     setNavigationViewValue();
                 }
+                //todo
             }
         });
 
-        civ_title_bar_head_portrait.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+//        civ_title_bar_head_portrait.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
 
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
@@ -86,8 +93,10 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
 
         bottomNavigationBar
                 //.addItem(new BottomNavigationItem(R.drawable.location, "定位").setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.drawable.share, "发现").setActiveColorResource(R.color.blue))
+                //.addItem(new BottomNavigationItem(R.drawable.share, "发现").setActiveColorResource(R.color.blue))
                 //.addItem(new BottomNavigationItem(R.drawable.search, "搜索").setActiveColorResource(R.color.blue))
+                .addItem(new BottomNavigationItem(R.drawable.share, "我的").setActiveColorResource(R.color.blue))
+                .addItem(new BottomNavigationItem(R.drawable.share, "test").setActiveColorResource(R.color.blue))
                 .setFirstSelectedPosition(0)
                 .initialise();
         fragments = getFragments();
@@ -97,7 +106,6 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
 
     private void setNavigationViewValue() {
         tv_nick_name.setText(userInfoBean.getNickName());
-        tv_telephone.setText(userInfoBean.getTelephone());
         Bitmap bitmap = bitmapLoader.loadBitmap(civ_nav_head_portrait, userInfoBean.getHeadPortrait(), new AsyncBitmapLoader.ImageCallBack() {
             @Override
             public void imageLoad(ImageView imageView, Bitmap bitmap) {
@@ -119,10 +127,10 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment fragment = null;
                 switch (position) {
-                    case 0:
+                    //case 0:
                         //fragment = MapFragment.newInstance();
-                        setTitleString("定位");
-                        break;
+                        //setTitleString("定位");
+                        //break;
                     /*case 1:
                         fragment = DiscoverFragment.newInstance();
                         setTitle("发现");
@@ -131,17 +139,23 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
                         fragment = SearchFragment.newInstance();
                         setTitle("搜索");
                         break;*/
+                    case FRAGMENT_POSITION_MYTASK:
+                        fragment = UserCenterFragment.newInstance();
+                        break;
                     default:
                         break;
                 }
-                fragments.remove(position);
-                fragments.add(position, fragment);
-                if (fragment.isAdded()) {
-                    ft.replace(R.id.layFrame, fragment);
-                } else {
-                    ft.add(R.id.layFrame, fragment);
+                if (fragment != null){
+                    refreshFragment(position,fragment);
                 }
-                ft.commitAllowingStateLoss();
+//                fragments.remove(position);
+//                fragments.add(position, fragment);
+//                if (fragment.isAdded()) {
+//                    ft.replace(R.id.layFrame, fragment);
+//                } else {
+//                    ft.add(R.id.layFrame, fragment);
+//                }
+//                ft.commitAllowingStateLoss();
             }
         }
 
@@ -149,7 +163,7 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        //fragments.add(MapFragment.newInstance());
+        fragments.add(UserCenterFragment.newInstance());
         return fragments;
     }
 
@@ -189,5 +203,24 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
     @Override
     protected void hideTitleBar() {
         tb_title_bar.setVisibility(View.GONE);
+    }
+
+    private <T extends Fragment> void refreshFragment(int position, T fragment){
+        if (position < 0 || position >= FRAGMENT_SIZE) return;
+
+        if (fragments.size() == FRAGMENT_SIZE){
+            fragments.remove(position);
+        }
+
+        fragments.add(position, fragment);
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (fragment.isAdded()) {
+            ft.replace(R.id.layFrame, fragment);
+        } else {
+            ft.add(R.id.layFrame, fragment);
+        }
+        ft.commitAllowingStateLoss();
     }
 }

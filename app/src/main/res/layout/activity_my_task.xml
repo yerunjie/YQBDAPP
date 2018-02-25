@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_toolbar_height"
+            android:background="@color/dark_grey"
+            app:navigationIcon="@drawable/ic_back"
+            android:paddingRight="@dimen/top_toolbar_padding_horizontal"
+            android:id="@+id/tb_title_bar">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:text="我的任务"
+                android:textSize="@dimen/top_toolbar_title_size"/>
+    </android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_my_task"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -16,4 +16,5 @@ public interface MainApi {
     @POST("user/getUserInfoByUserID")
     SimpleCall<YQBDBaseResponse<UserInfoBean>> getUserInfo();
 
+
 }

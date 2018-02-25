@@ -4,6 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- bg -->
+    <color name="dark_grey">#363636</color>
+    <color name="light_grey">#f0f0f0</color>
+
+    <color name="accessible_green">#1bd1a0</color>
+    <color name="accessible_blue">#74e3fa</color>
+
     <!-- common -->
     <color name="common_bg">#efefef</color>
     <color name="common_gray_light">#f7f7f8</color>

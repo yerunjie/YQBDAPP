@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "27.0.0"
+    buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.yqbd.yqbdapp"
         minSdkVersion 21
@@ -40,11 +40,12 @@ dependencies {
     //eventbus
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
-
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.guava:guava:20.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
+    compile 'com.landptf:landptf:1.0.2'
     compile project(':support')
 }

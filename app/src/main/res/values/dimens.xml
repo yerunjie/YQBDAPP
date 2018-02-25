@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_toolbar_height">50dp</dimen>
+    <dimen name="top_toolbar_title_size">16sp</dimen>
+    <dimen name="top_toolbar_title_size_sm">14sp</dimen>
+    <dimen name="top_toolbar_padding_horizontal">16dp</dimen>
+    <dimen name="text_size_lg">18sp</dimen>
+    <dimen name="text_size_md">16sp</dimen>
+    <dimen name="text_size_sm">14sp</dimen>
+    <dimen name="text_size_xs">12sp</dimen>
+    <dimen name="list_item_outer_height">102dp</dimen>
+    <dimen name="list_item_inner_height">70dp</dimen>
+    <dimen name="list_item_img_size">70dp</dimen>
+</resources>

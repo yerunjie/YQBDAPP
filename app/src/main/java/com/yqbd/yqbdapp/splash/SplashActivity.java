@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import com.yqbd.yqbdapp.R;
 import com.yqbd.yqbdapp.base.YQBDBaseActivity;
 import com.yqbd.yqbdapp.base.YQBDBaseApplication;
+import com.yqbd.yqbdapp.login.activity.UserLoginActivity;
 import com.yqbd.yqbdapp.main.activity.MainActivity;
 
 
@@ -33,6 +35,7 @@ public class SplashActivity extends YQBDBaseActivity {
         }
     };
     private LinearLayout ll_splash_btn_group;
+    private Button btn_user_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,14 @@ public class SplashActivity extends YQBDBaseActivity {
         }
         setContentView(R.layout.splash_activity_splash);
         ll_splash_btn_group = (LinearLayout) findViewById(R.id.ll_splash_btn_group);
+        btn_user_login = (Button) findViewById(R.id.btn_user_login);
+        btn_user_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SplashActivity.this, UserLoginActivity.class));
+            }
+        });
+
         hideTitleBar();
         if (YQBDBaseApplication.isLogin()) {
             mHandler.sendEmptyMessageDelayed(WHAT_SPLASH, SPLASH_TIME);
