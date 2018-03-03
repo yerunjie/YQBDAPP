@@ -5,13 +5,14 @@ import android.os.Parcelable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class TaskBean implements Parcelable {
+public class TaskBean implements Parcelable,Serializable {
     private Integer taskId;
 
     private Integer companyId;

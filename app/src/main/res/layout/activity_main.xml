@@ -31,7 +31,14 @@
                     android:textColor="@color/white"
                     android:text="标题"
                     android:textSize="22sp"/>
+            <ImageView
+                android:layout_width="43dp"
+                android:layout_height="48dp"
+                app:srcCompat="@android:drawable/ic_input_add"
+                android:layout_gravity="right"
+                android:id="@+id/add_image_view"/>
         </android.support.v7.widget.Toolbar>
+
         <FrameLayout
                 android:id="@+id/layFrame"
                 android:layout_width="match_parent"
