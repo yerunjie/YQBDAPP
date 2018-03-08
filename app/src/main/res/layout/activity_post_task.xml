@@ -57,13 +57,13 @@ tools:context="com.yqbd.yqbdapp.user.activity.PostTaskActivity">
                     android:text="@string/dealline"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/dealline"/>
+                    android:id="@+id/deadline"/>
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/dealline"
                     android:gravity="center"
-                    android:id="@+id/dealline_time"
+                    android:id="@+id/deadline_time"
                     android:textSize="24sp"/>
         </LinearLayout>
         <Button

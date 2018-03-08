@@ -2,6 +2,8 @@ package com.yqbd.yqbdapp.user.api;
 
 import com.lemon.support.request.SimpleCall;
 import com.yqbd.yqbdapp.base.YQBDBaseResponse;
+import com.yqbd.yqbdapp.bean.TaskBean;
+import com.yqbd.yqbdapp.user.request.TaskRequest;
 import com.yqbd.yqbdapp.user.request.UncollectTaskRequest;
 import com.yqbd.yqbdapp.user.request.UpdateUserInfoRequest;
 import com.yqbd.yqbdapp.user.request.UserTakeRequest;
@@ -35,5 +37,6 @@ public interface UserApi {
     @POST("user/updateUserInfo")
     SimpleCall<YQBDBaseResponse> updateUserInfo(@Body UpdateUserInfoRequest request);
 
-
+    @POST("task/publishTask")
+    SimpleCall<YQBDBaseResponse> publishTask(@Body TaskRequest request);
 }
