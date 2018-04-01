@@ -9,15 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -26,12 +20,12 @@ import com.yqbd.yqbdapp.R;
 import com.yqbd.yqbdapp.base.YQBDBaseActivity;
 import com.yqbd.yqbdapp.base.YQBDBaseCallBack;
 import com.yqbd.yqbdapp.base.YQBDBaseResponse;
-import com.yqbd.yqbdapp.main.fragments.TaskListFragment;
-import com.yqbd.yqbdapp.main.fragments.UserCenterFragment;
 import com.yqbd.yqbdapp.bean.UserInfoBean;
 import com.yqbd.yqbdapp.main.api.MainApi;
+import com.yqbd.yqbdapp.main.fragments.IndexFragment;
+import com.yqbd.yqbdapp.main.fragments.TaskListFragment;
+import com.yqbd.yqbdapp.main.fragments.UserCenterFragment;
 import com.yqbd.yqbdapp.user.activity.PostTaskActivity;
-import com.yqbd.yqbdapp.user.activity.SingleTaskActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
@@ -48,9 +42,9 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
 
     ImageView addImage;
 
-    private static final int FRAGMENT_POSITION_INDEX = 2;
+    private static final int FRAGMENT_POSITION_INDEX = 0;
     private static final int FRAGMENT_POSITION_TASK = 1;
-    private static final int FRAGMENT_POSITION_MYTASK = 0;
+    private static final int FRAGMENT_POSITION_MYTASK = 2;
 
     private static final int FRAGMENT_SIZE = 3;
 
@@ -72,11 +66,11 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
                 userInfoBean = o.obj;
             }
         });
-        addImage = (ImageView)findViewById(R.id.add_image_view);
+        addImage = (ImageView) findViewById(R.id.add_image_view);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),PostTaskActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PostTaskActivity.class);
                 startActivity(intent);
             }
         });
@@ -118,10 +112,9 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
                 //.addItem(new BottomNavigationItem(R.drawable.location, "定位").setActiveColorResource(R.color.orange))
                 //.addItem(new BottomNavigationItem(R.drawable.share, "发现").setActiveColorResource(R.color.blue))
                 //.addItem(new BottomNavigationItem(R.drawable.search, "搜索").setActiveColorResource(R.color.blue))
-
-                .addItem(new BottomNavigationItem(R.drawable.share, "我的").setActiveColorResource(R.color.blue))
-                .addItem(new BottomNavigationItem(R.drawable.share, "任务").setActiveColorResource(R.color.blue))
-                .addItem(new BottomNavigationItem(R.drawable.share, "test").setActiveColorResource(R.color.blue))
+                .addItem(new BottomNavigationItem(R.drawable.home, "首页").setActiveColorResource(R.color.dark_grey))
+                .addItem(new BottomNavigationItem(R.drawable.form, "任务").setActiveColorResource(R.color.dark_grey))
+                .addItem(new BottomNavigationItem(R.drawable.personal, "我的").setActiveColorResource(R.color.dark_grey))
                 .setFirstSelectedPosition(0)
                 .initialise();
         fragments = getFragments();
@@ -152,29 +145,20 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment fragment = null;
                 switch (position) {
-                    //case 0:
-                        //fragment = MapFragment.newInstance();
-                        //setTitleString("定位");
-                        //break;
-                    /*case 1:
-                        fragment = DiscoverFragment.newInstance();
-                        setTitle("发现");
-                        break;
-                    case 2:
-                        fragment = SearchFragment.newInstance();
-                        setTitle("搜索");
-                        break;*/
                     case FRAGMENT_POSITION_MYTASK:
                         fragment = UserCenterFragment.newInstance();
                         break;
                     case FRAGMENT_POSITION_TASK:
                         fragment = TaskListFragment.newInstance();
                         break;
+                    case FRAGMENT_POSITION_INDEX:
+                        fragment = IndexFragment.newInstance();
+                        break;
                     default:
                         break;
                 }
-                if (fragment != null){
-                    refreshFragment(position,fragment);
+                if (fragment != null) {
+                    refreshFragment(position, fragment);
                 }
 //                fragments.remove(position);
 //                fragments.add(position, fragment);
@@ -192,6 +176,7 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(UserCenterFragment.newInstance());
+        fragments.add(TaskListFragment.newInstance());
         return fragments;
     }
 
@@ -214,29 +199,29 @@ public class MainActivity extends YQBDBaseActivity implements BottomNavigationBa
     }
 
     @Override
-    protected void setTitleString(String title) {
+    public void setTitleString(String title) {
         tv_title.setText(title);
     }
 
     @Override
-    protected void setTitleId(int id) {
+    public void setTitleId(int id) {
         tv_title.setText(id);
     }
 
     @Override
-    protected void showTitleBar() {
+    public void showTitleBar() {
         tb_title_bar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    protected void hideTitleBar() {
+    public void hideTitleBar() {
         tb_title_bar.setVisibility(View.GONE);
     }
 
-    private <T extends Fragment> void refreshFragment(int position, T fragment){
+    private <T extends Fragment> void refreshFragment(int position, T fragment) {
         if (position < 0 || position >= FRAGMENT_SIZE) return;
 
-        if (fragments.size() == FRAGMENT_SIZE){
+        if (fragments.size() == FRAGMENT_SIZE) {
             fragments.remove(position);
         }
 

@@ -1,12 +1,14 @@
 package com.yqbd.yqbdapp.user.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.lemon.support.util.AsyncBitmapLoader;
 import com.yqbd.yqbdapp.R;
 import com.yqbd.yqbdapp.bean.TaskBean;
 
@@ -17,7 +19,7 @@ import java.util.Date;
 import java.io.Serializable;
 
 public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.ViewHolder>implements View.OnClickListener {
-
+    private AsyncBitmapLoader asyncBitmapLoader = AsyncBitmapLoader.asyncBitmapLoader;
     private List<TaskBean> mData;
 
     private OnItemClickListener mOnItemClickListener = null;
@@ -71,6 +73,16 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.ViewHolder
                 return false;
             }
         });
+        Bitmap bitmap = asyncBitmapLoader.loadBitmap(holder.img, item.getSimpleDrawingAddress(), holder.img.getLayoutParams().width, holder.img.getLayoutParams().height, new AsyncBitmapLoader.ImageCallBack() {
+            @Override
+            public void imageLoad(ImageView imageView, Bitmap bitmap) {
+                // TODO Auto-generated method stub
+                imageView.setImageBitmap(bitmap);
+            }
+        });
+        if (bitmap != null) {
+            holder.img.setImageBitmap(bitmap);
+        }
     }
 
     @Override

@@ -64,6 +64,7 @@ public class TaskListFragment extends YQBDBaseFragment implements ButtonExtendM.
     }
 
     private void initView(){
+        setTitleId(R.string.main_task_list_title);
         recyclerViewTaskList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerViewTaskList.setItemAnimator(new DefaultItemAnimator());
 

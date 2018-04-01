@@ -16,6 +16,15 @@ public class YQBDBaseFragment extends Fragment {
         // Required empty public constructor
     }
 
+    protected void setTitleString(String title) {
+        BaseActivity baseActivity = getBaseActivity();
+        baseActivity.setTitleString(title);
+    }
+
+    protected void setTitleId(int id) {
+        setTitleString(getString(id));
+    }
+
 
     public BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();

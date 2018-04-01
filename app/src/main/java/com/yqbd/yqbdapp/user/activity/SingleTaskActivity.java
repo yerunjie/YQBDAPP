@@ -1,15 +1,18 @@
 package com.yqbd.yqbdapp.user.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.*;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.lemon.support.Base.BaseActivity;
 import com.yqbd.yqbdapp.R;
 import com.yqbd.yqbdapp.base.YQBDBaseActivity;
 import com.yqbd.yqbdapp.base.YQBDBaseCallBack;
@@ -17,16 +20,12 @@ import com.yqbd.yqbdapp.base.YQBDBaseResponse;
 import com.yqbd.yqbdapp.bean.SingleResultBean;
 import com.yqbd.yqbdapp.bean.TaskBean;
 import com.yqbd.yqbdapp.bean.UserInfoBean;
-import com.yqbd.yqbdapp.user.adapter.MyTaskAdapter;
 import com.yqbd.yqbdapp.user.api.UserApi;
 import com.yqbd.yqbdapp.user.request.UserTakeRequest;
-import com.yqbd.yqbdapp.utils.GsonUtil;
 import com.yqbd.yqbdapp.widget.TagListView;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class SingleTaskActivity extends YQBDBaseActivity {
 
@@ -80,6 +79,8 @@ public class SingleTaskActivity extends YQBDBaseActivity {
     private TaskBean taskBean;
     UserInfoBean userInfoBean;
 
+    private MenuItem collectButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,32 +106,18 @@ public class SingleTaskActivity extends YQBDBaseActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         startTime.setText(simpleDateFormat.format(new Date(taskBean.getStartTime())));
         completeTime.setText(simpleDateFormat.format(new Date(taskBean.getCompleteTime())));
-        addRequest(getService(UserApi.class).getUserInfo(), new YQBDBaseCallBack() {
-            @Override
-            public void onSuccess200(Object o) {
-                userInfoBean = GsonUtil.getEntity(o, new com.google.common.reflect.TypeToken<UserInfoBean>() {
-                }.getType());
-                addRequest(getService(UserApi.class).isTake(taskBean.getTaskId(), userInfoBean.getUserId()), new YQBDBaseCallBack() {
-                    @Override
-                    public void onSuccess200(Object o) {
 
-                        SingleResultBean singleResultBean = GsonUtil.getEntity(o, new com.google.common.reflect.TypeToken<SingleResultBean>() {
-                        }.getType());
-                       istake = singleResultBean.singleResult;
-                       refreshTakeButton(istake);
-                    }
-                });
+        addRequest(getService(UserApi.class).isTake(taskBean.getTaskId(), 0), new YQBDBaseCallBack<YQBDBaseResponse<SingleResultBean>>() {
+            @Override
+            public void onSuccess200(YQBDBaseResponse<SingleResultBean> o) {
+                istake = o.obj.singleResult;
+                refreshTakeButton(istake);
             }
         });
-
-
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserTakeRequest userTakeRequest = new UserTakeRequest();
-                userTakeRequest.setTaskId(taskBean.getTaskId());
-                userTakeRequest.setUserId(userInfoBean.getUserId());
-                addRequest(getService(UserApi.class).takeTasks(taskBean.getTaskId(), userInfoBean.getUserId()), new YQBDBaseCallBack() {
+                addRequest(getService(UserApi.class).takeTasks(taskBean.getTaskId(), 0), new YQBDBaseCallBack() {
                     @Override
                     public void onSuccess200(Object o) {
                         istake = !istake;
@@ -180,13 +167,56 @@ public class SingleTaskActivity extends YQBDBaseActivity {
             }
         });
     }
-    void  refreshTakeButton(Boolean istake){
-        if(istake){
-            taskButton.setText("取消申请");
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 為了讓 Toolbar 的 Menu 有作用，這邊的程式不可以拿掉
+        getMenuInflater().inflate(R.menu.top_toolbar_style, menu);
+        collectButton = menu.getItem(0);
+        addRequest(getService(UserApi.class).isCollected(taskBean.getTaskId(), 0), new YQBDBaseCallBack<YQBDBaseResponse<SingleResultBean>>() {
+            @Override
+            public void onSuccess200(YQBDBaseResponse<SingleResultBean> o) {
+                resetCollectButton(o.obj.singleResult);
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODOAuto-generated method stub
+        //Toast.makeText(this,item.getTitle()+String.valueOf(item.getItemId()), Toast.LENGTH_SHORT).show();
+        //区分被点击的item
+        switch (item.getItemId()) {
+            case R.id.action_collect:
+                addRequest(getService(UserApi.class).collect(taskBean.getTaskId(), 0), new YQBDBaseCallBack<YQBDBaseResponse<SingleResultBean>>() {
+                    @Override
+                    public void onSuccess200(YQBDBaseResponse<SingleResultBean> o) {
+                        resetCollectButton(o.obj.singleResult);
+                    }
+                });
+                break;
+            case R.id.action_share:
+                makeToast("获得测试资格才可使用");
+                break;
+
         }
-        else
-        {
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void resetCollectButton(Boolean result) {
+        if (result) {
+            collectButton.setIcon(R.drawable.collect);
+        } else {
+            collectButton.setIcon(R.drawable.collect_white);
+        }
+    }
+
+    void refreshTakeButton(Boolean istake) {
+        if (istake) {
+            taskButton.setText("取消申请");
+        } else {
             taskButton.setText("申请");
         }
-    };
+    }
 }

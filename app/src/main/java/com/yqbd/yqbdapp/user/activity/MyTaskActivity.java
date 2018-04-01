@@ -39,6 +39,7 @@ public class MyTaskActivity extends YQBDBaseActivity {
         setContentView(R.layout.activity_my_task);
         ButterKnife.bind(this);
         initView();
+        setTitleString("我的任务");
     }
 
     private void initView(){
@@ -54,13 +55,5 @@ public class MyTaskActivity extends YQBDBaseActivity {
             }
 
         });
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        setSupportActionBar(toolbar);
     }
 }

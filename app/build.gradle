@@ -45,6 +45,7 @@ dependencies {
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
     compile 'com.landptf:landptf:1.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.fang:dashview:v1.0.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'

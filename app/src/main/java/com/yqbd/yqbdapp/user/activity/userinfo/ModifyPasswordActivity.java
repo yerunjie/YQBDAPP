@@ -20,16 +20,12 @@ import com.yqbd.yqbdapp.user.request.UpdateUserInfoRequest;
 
 public class ModifyPasswordActivity extends YQBDBaseActivity {
 
-    @BindView(R.id.btn_submit)
-    TextView btnSubmit;
     @BindView(R.id.input_oldpassword)
     EditText oldPassword;
     @BindView(R.id.input_newpassword)
     EditText newPassword;
     @BindView(R.id.input_repeatpassword)
     EditText repeatPassword;
-    @BindView(R.id.tb_title_bar)
-    Toolbar toolbar;
 
     UserInfoBean userInfoBean;
 
@@ -43,14 +39,8 @@ public class ModifyPasswordActivity extends YQBDBaseActivity {
     }
 
     private void initView(){
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        setSupportActionBar(toolbar);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        setTitleId(R.string.user_modify_title);
+        setRightTextId(R.string.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(oldPassword.getText())

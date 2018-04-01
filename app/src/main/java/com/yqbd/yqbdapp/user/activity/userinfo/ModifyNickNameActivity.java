@@ -20,12 +20,8 @@ import com.yqbd.yqbdapp.user.request.UpdateUserInfoRequest;
 
 public class ModifyNickNameActivity extends YQBDBaseActivity {
 
-    @BindView(R.id.btn_submit)
-    TextView btnSubmit;
     @BindView(R.id.input_nickname)
     EditText editText;
-    @BindView(R.id.tb_title_bar)
-    Toolbar toolbar;
 
     UserInfoBean userInfoBean;
 
@@ -39,15 +35,9 @@ public class ModifyNickNameActivity extends YQBDBaseActivity {
     }
 
     private void initView(){
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        setSupportActionBar(toolbar);
+        setTitleId(R.string.user_modify_title);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        setRightTextId(R.string.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editText.getText() ==  null || editText.getText().toString().isEmpty()){

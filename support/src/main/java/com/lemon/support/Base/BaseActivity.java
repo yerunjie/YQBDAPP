@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.FrameLayout;
@@ -35,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private View mRoot;
     private FrameLayout fl_container;
     private Toolbar tb_title_bar;
-    private TextView tv_title;
+    private TextView tv_title, tv_right;
     private CircleImageView civ_title_bar_head_portrait;
     private float mIconSize, mTextSize;
 
@@ -70,7 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mRoot = LayoutInflater.from(this)
                 .inflate(mCustomRootLayout == -1 ? R.layout.base_activity_layout : mCustomRootLayout, null);
         super.setContentView(mRoot);
-        initView();
+        initBaseView();
         addViewToContent(layoutResID);
     }
 
@@ -79,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mRoot = LayoutInflater.from(this)
                 .inflate(mCustomRootLayout == -1 ? R.layout.base_activity_layout : mCustomRootLayout, null);
         super.setContentView(mRoot);
-        initView();
+        initBaseView();
         addViewToContent(view);
     }
 
@@ -88,7 +89,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mRoot = LayoutInflater.from(this)
                 .inflate(mCustomRootLayout == -1 ? R.layout.base_activity_layout : mCustomRootLayout, null);
         super.setContentView(mRoot);
-        initView();
+        initBaseView();
         addViewToContent(view, params);
     }
 
@@ -107,32 +108,34 @@ public abstract class BaseActivity extends AppCompatActivity {
         addViewToContent(view, params);
     }
 
-    private void initView() {
+    private void initBaseView() {
         fl_container = mRoot.findViewWithTag("fl_container");
         tv_title = mRoot.findViewWithTag("tv_title");
         tb_title_bar = mRoot.findViewWithTag("tb_title_bar");
         setSupportActionBar(tb_title_bar);
         civ_title_bar_head_portrait = mRoot.findViewWithTag("civ_title_bar_head_portrait");
+        tv_right = mRoot.findViewWithTag("tv_right");
+        setTitle("");
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    protected void setTitleString(String title) {
+    public void setTitleString(String title) {
         tv_title.setText(title);
     }
 
-    protected void setTitleId(int id) {
+    public void setTitleId(int id) {
         setTitleString(getString(id));
     }
 
-    protected void showTitleBar() {
+    public void showTitleBar() {
         tb_title_bar.setVisibility(View.VISIBLE);
     }
 
-    protected void hideTitleBar() {
+    public void hideTitleBar() {
         tb_title_bar.setVisibility(View.GONE);
     }
 
-    protected void showBackIcon() {
+    public void showBackIcon() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tb_title_bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +143,22 @@ public abstract class BaseActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public TextView setRightTextId(int id) {
+        return setRightText(getString(id));
+    }
+
+    public TextView setRightText(String text) {
+        if (isIcon(text)) {
+            setIconTypeface(tv_right);
+            tv_right.setText(getHtmlText(text));
+        } else {
+            tv_right.setTypeface(Typeface.DEFAULT);
+            tv_right.setText(text);
+        }
+        tv_right.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
+        return tv_right;
     }
 
     @Override

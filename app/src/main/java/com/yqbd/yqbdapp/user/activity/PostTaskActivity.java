@@ -54,6 +54,7 @@ public class PostTaskActivity extends YQBDBaseActivity implements IDataCallBack 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_task);
         ButterKnife.bind(this);
+        setTitle("发布任务");
         deadlineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

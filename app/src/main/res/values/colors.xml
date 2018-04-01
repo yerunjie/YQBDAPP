@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#363636</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
@@ -44,4 +44,10 @@
     <color name="black">#000000</color>
     <color name="green">#ff28713f</color>
     <color name="blue">#ff0000ff</color>
+
+
+
+    <color name="title_gray">#2c2c2c</color>
+
+    <color name="black_50_alpha">#88000000</color>
 </resources>

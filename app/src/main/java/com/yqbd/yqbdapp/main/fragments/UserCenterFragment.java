@@ -55,6 +55,7 @@ public class UserCenterFragment extends YQBDBaseFragment implements ButtonExtend
     }
 
     private void initView(){
+        setTitleId(R.string.main_user_center_title);
         btnMyTask.setOnClickListener(this);
         btnMyInfo.setOnClickListener(this);
         btnMyCollect.setOnClickListener(this);

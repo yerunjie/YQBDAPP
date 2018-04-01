@@ -24,6 +24,25 @@
     <string name="primary_work">•主要工作</string>
     <string name="app_dialog_ok">OK</string>
 
+    <string name="edit">编辑</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- strings for main activity-->
+    <string name="main_user_center_title">我的</string>
+    <string name="main_task_list_title">任务</string>
+
+    <!-- strings for my collect activity-->
+    <string name="user_my_collect_title">我的收藏</string>
+
+    <!-- strings for my info activity-->
+    <string name="user_my_info_title">个人信息</string>
+
+    <!-- strings for modify activity-->
+    <string name="user_modify_title">修改个人信息</string>
+
+
 </resources>

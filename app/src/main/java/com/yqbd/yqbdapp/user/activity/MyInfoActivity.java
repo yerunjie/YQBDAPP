@@ -66,8 +66,6 @@ public class MyInfoActivity extends YQBDBaseActivity implements View.OnClickList
     @BindView(R.id.btn_telephone)
     ImageButton telephoneImageButton;
 
-    @BindView(R.id.tb_title_bar)
-    Toolbar toolbar;
 
     OptionsPickerView sexPickerView;
     private ArrayList<String> optionItems;
@@ -101,13 +99,8 @@ public class MyInfoActivity extends YQBDBaseActivity implements View.OnClickList
             }
 
         });
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        setSupportActionBar(toolbar);
+        setTitleId(R.string.user_my_info_title);
+        showBackIcon();
         initOptionPicker();
         nicknameImageButton.setOnClickListener(this);
         occupationImageButton.setOnClickListener(this);

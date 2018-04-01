@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class AsyncBitmapLoader {
 
-    private static final String path = "";
+    private static final String path = "http://goout-1252946747.cossh.myqcloud.com";
     /**
      * 内存图片软引用缓冲
      */

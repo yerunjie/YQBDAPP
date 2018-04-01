@@ -2,12 +2,12 @@ package com.yqbd.yqbdapp.user.api;
 
 import com.lemon.support.request.SimpleCall;
 import com.yqbd.yqbdapp.base.YQBDBaseResponse;
-import com.yqbd.yqbdapp.bean.TaskBean;
+import com.yqbd.yqbdapp.bean.SingleResultBean;
 import com.yqbd.yqbdapp.user.request.TaskRequest;
 import com.yqbd.yqbdapp.user.request.UncollectTaskRequest;
 import com.yqbd.yqbdapp.user.request.UpdateUserInfoRequest;
-import com.yqbd.yqbdapp.user.request.UserTakeRequest;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -29,7 +29,7 @@ public interface UserApi {
     SimpleCall<YQBDBaseResponse> takeTasks(@Query("taskId") int taskId, @Query("userId") int userId);
 
     @POST("task/isTake")
-    SimpleCall<YQBDBaseResponse> isTake(@Query("taskId") int taskId, @Query("userId") int userId);
+    SimpleCall<YQBDBaseResponse<SingleResultBean>> isTake(@Query("taskId") int taskId, @Query("userId") int userId);
 
     @POST("user/getUserInfoByUserID")
     SimpleCall<YQBDBaseResponse> getUserInfo();
@@ -39,4 +39,13 @@ public interface UserApi {
 
     @POST("task/publishTask")
     SimpleCall<YQBDBaseResponse> publishTask(@Body TaskRequest request);
+
+    @POST("task/isCollected")
+    SimpleCall<YQBDBaseResponse<SingleResultBean>> isCollected(@Query("taskId") int taskId, @Query("userId") int userId);
+
+    @POST("task/collect")
+    SimpleCall<YQBDBaseResponse<SingleResultBean>> collect(@Query("taskId") int taskId, @Query("userId") int userId);
+
+    @GET("task/tasks")
+    SimpleCall<YQBDBaseResponse> getTasks(@Query("page_size") int pageSize, @Query("page_number") int pageNumber);
 }

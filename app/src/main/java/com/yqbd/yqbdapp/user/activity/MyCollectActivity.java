@@ -39,10 +39,6 @@ public class MyCollectActivity  extends YQBDBaseActivity implements View.OnClick
     TextView btnSelectAll;
     @BindView(R.id.my_collect_bottom_dialog)
     LinearLayout myCollectBottomDialog;
-    @BindView(R.id.my_collect_editor)
-    TextView btnEditor;
-    @BindView(R.id.tb_title_bar)
-    Toolbar toolbar;
 
     private MyCollectAdapter adapter;
     private boolean inEditMode = false;
@@ -54,12 +50,12 @@ public class MyCollectActivity  extends YQBDBaseActivity implements View.OnClick
         setContentView(R.layout.activity_my_collect);
         ButterKnife.bind(this);
         initView();
+        setTitleId(R.string.user_my_collect_title);
     }
 
     private void initView(){
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        btnEditor.setOnClickListener(this);
         btnSelectAll.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
 
@@ -70,21 +66,28 @@ public class MyCollectActivity  extends YQBDBaseActivity implements View.OnClick
             }
 
         });
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        showBackIcon();
+        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
+        setRightTextId(R.string.edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeEditMode();
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.my_collect_editor:
+            /*case R.id.my_collect_editor:
                 changeEditMode();
-                break;
+                break;*/
             case R.id.my_collect_select_all:
                 if (inEditMode){
                     if (allSelected){
@@ -125,10 +128,10 @@ public class MyCollectActivity  extends YQBDBaseActivity implements View.OnClick
     private void changeEditMode(){
         inEditMode = !inEditMode;
         if (inEditMode){
-            btnEditor.setText("取消");
+            setRightTextId(R.string.cancel);
             myCollectBottomDialog.setVisibility(View.VISIBLE);
         } else {
-            btnEditor.setText("编辑");
+            setRightTextId(R.string.edit);
             adapter.selectNone();
             myCollectBottomDialog.setVisibility(View.GONE);
         }
